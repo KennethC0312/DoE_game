@@ -31,7 +31,7 @@ class Diggin:
         pass
     else:
       #gun
-      print('you got gun')
+      gun = pick_up('gun', 1, 999, 0)
       self.inventory['gun'] = 1
       self.inventory['sword'] = 0
       self.inventory['armour'] = 0
