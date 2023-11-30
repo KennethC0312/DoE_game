@@ -3,16 +3,19 @@ import pygame
 import time
 from pygame.locals import QUIT
 from digging import *
-from maze import *
+from maze_level import *
 #
 black = ('#000000')
 check = [0, 2, 3]
 level = 0
 clock = pygame.time.Clock()
 fps = 16
+block_dim = 32
+x = 32
+y = 32
 #
 screen = pygame.display.set_mode((21 * block_dim, 21*block_dim))
-pygame.display.set_caption("stuff")
+pygame.display.set_caption("A cool Game")
 #
 radius = 100
 cover_surf = pygame.Surface((radius*2, radius*2))
