@@ -1,4 +1,5 @@
 import random
+from pick_up_animations import *
 
 class Diggin:
   def __init__(self, inventory, level):
@@ -14,10 +15,20 @@ class Diggin:
         self.inventory['torch'] +=1
     elif num >= 3 and num <= 6:
       #sword
-      pass
+      if self.level == 1:
+        pass
+      elif self.level == 2:
+        pass
+      else:
+        pass
     elif num >= 7 and num <= 10:
       #armour
-      pass
+      if self.level == 1:
+        pass
+      elif self.level == 2:
+        pass
+      else:
+        pass
     else:
       #gun
       print('you got gun')

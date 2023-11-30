@@ -4,13 +4,11 @@ import time
 from pygame.locals import QUIT
 from digging import *
 from maze_level import *
+from const import *
 #
-black = ('#000000')
 check = [0, 2, 3]
 level = 0
 clock = pygame.time.Clock()
-fps = 16
-block_dim = 32
 x = 32
 y = 32
 #

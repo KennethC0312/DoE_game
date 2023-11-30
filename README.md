@@ -1,2 +1,1 @@
-# DoE_game
-# A game
+# this is my Duke Of Edinburgh Game which I will 100% not finish in time, if I die or play a game of bungee jump without a rope, this is probably the reason why.
