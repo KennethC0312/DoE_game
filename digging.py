@@ -14,21 +14,47 @@ class Diggin:
       if self.inventory['torch'] == 1 and self.level >= 2:
         self.inventory['torch'] +=1
     elif num >= 3 and num <= 6:
+      attack = random.randint(1, 1)
       #sword
       if self.level == 1:
-        pass
+        attack *= 1
+        sword = pick_up('weapon', attack, self.inventory['sword'], 0)
+        check = sword.pick_up_animation()
+        if check:
+          self.inventory['sword'] = attack
       elif self.level == 2:
-        pass
+        attack *= 2
+        sword = pick_up('weapon', attack, self.inventory['sword'], 0)
+        check = sword.pick_up_animation()
+        if check:
+           self.inventory['sword'] = attack
       else:
-        pass
+        attack *= 3
+        sword = pick_up('weapon', attack, self.inventory['sword'], 0)
+        check = sword.pick_up_animation()
+        if check:
+          self.inventory['sword'] = attack
     elif num >= 7 and num <= 10:
+      defence = random.randint(1, 1)
       #armour
       if self.level == 1:
-        pass
+        defence *= 1
+        armour = pick_up('armour', defence, self.inventory['armour'], 0)
+        check = armour.pick_up_animation()
+        if check:
+           self.inventory['armour'] = defence
       elif self.level == 2:
-        pass
+        defence *= 2
+        armour = pick_up('armour', defence, self.inventory['armour'], 0)
+        check = armour.pick_up_animation()
+        if check:
+           self.inventory['armour'] = defence
       else:
-        pass
+        defence *= 3
+        armour = pick_up('armour', defence, self.inventory['armour'], 0)
+        check = armour.pick_up_animation()
+        if check:
+           self.inventory['armour'] = defence
     else:
       #gun
       gun = pick_up('gun', 999, 1, 0)

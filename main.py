@@ -23,7 +23,7 @@ pygame.draw.circle(cover_surf, (255, 255, 255), (radius, radius), radius)
 #
 inventory = {
   'armour': 0,
-  'sword' : 0,
+  'sword' : 16,
   'torch' : 0,
 }
 #
