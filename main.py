@@ -5,31 +5,40 @@ from pygame.locals import QUIT
 from digging import *
 from maze_level import *
 from const import *
+from pick_up_animations import*
+
 #
 check = [0, 2, 3]
 level = 0
 clock = pygame.time.Clock()
+radius = 100
 x = 32
 y = 32
+x_mask = radius-(x+block_dim/2)
+y_mask = radius-(y+block_dim/2)
 #
 screen = pygame.display.set_mode((21 * block_dim, 21*block_dim))
 pygame.display.set_caption("A cool Game")
 #
-radius = 100
-cover_surf = pygame.Surface((radius*2, radius*2))
-cover_surf.fill(0)
-cover_surf.set_colorkey((255, 255, 255))
-pygame.draw.circle(cover_surf, (255, 255, 255), (radius, radius), radius)
+cover_surf = pygame.Surface((screen_size, screen_size))
+cover_surf.fill((0, 0, 255))
+cover_surf.set_colorkey((0, 1, 255))
+pygame.draw.circle(cover_surf, (0, 1, 255), (x_mask, y_mask), radius)
+clip_rect = pygame.Rect(0, 0, screen_size, screen_size)
+#
+no_dig = pick_up('no', str(0), str(0), str(0), cover_surf)
 #
 inventory = {
   'armour': 0,
-  'sword' : 16,
+  'sword' : 0,
   'torch' : 0,
+  'gun': 1
 }
 #
 while True:
   screen.fill(black)
-  clip_rect = pygame.Rect((x+(block_dim/2))-radius, (y+(block_dim/2))-radius, radius*2, radius*2)
+  cover_surf.fill((0, 0, 255))
+  pygame.draw.circle(cover_surf, (0, 1, 255), (x_mask, y_mask), radius)
   screen.set_clip(clip_rect)
   for i in range(len(maze[level])):
     for n in range(len(maze[level][i])):
@@ -39,7 +48,7 @@ while True:
         pygame.draw.rect(screen, (0, 255, 0), (n * block_dim, i * block_dim, block_dim, block_dim))
       elif maze[level][i][n] == 3:
         pygame.draw.rect(screen, (0, 0, 255), (n * block_dim, i * block_dim, block_dim, block_dim))
-  player = pygame.draw.rect(screen, (255, 0, 0), (x, y, block_dim, block_dim))
+  player = pygame.draw.rect(screen, ('#66729E'), (x, y, block_dim, block_dim))
   screen.blit(cover_surf, clip_rect)
   pygame.display.update()
   if maze[level][y//block_dim][x//block_dim] == 2 and level == 2:
@@ -58,28 +67,33 @@ while True:
      tempy = (y)//block_dim
      if maze[level][tempy][tempx] in check:
        x -= block_dim
+       x_mask -= block_dim
   if key[pygame.K_RIGHT]:
      tempx = (x + block_dim)//block_dim
      tempy = (y)//block_dim
      if maze[level][tempy][tempx] in check:
        x += block_dim
+       x_mask += block_dim
   if key[pygame.K_UP]:
      tempx = (x)//block_dim
      tempy = (y - block_dim)//block_dim
      if maze[level][tempy][tempx] in check:
        y -= block_dim
+       y_mask -= block_dim
   if key[pygame.K_DOWN]:
      tempx = (x)//block_dim
      tempy = (y + block_dim)//block_dim
      if maze[level][tempy][tempx] in check:
        y += block_dim
+       y_mask += block_dim
   if key[pygame.K_x]:
     if maze[level][y//block_dim][x//block_dim] == 3:
       if 'gun' in inventory:
-        print('you got gun, no more dig')
+        no_dig.got_gun()
+        pygame.draw.circle(cover_surf, (0, 1, 255), (radius, radius), radius)
       else:
         print('dig')
-        inventory_change = Diggin(inventory, level)
+        inventory_change = Diggin(inventory, level, screen)
         inventory = inventory_change.dig()
         print(inventory)
         maze[level][y//block_dim][x//block_dim] = 0
