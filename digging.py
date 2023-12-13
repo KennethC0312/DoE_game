@@ -2,9 +2,10 @@ import random
 from pick_up_animations import *
 
 class Diggin:
-  def __init__(self, inventory, level, screen):
+  def __init__(self, inventory, level, screen_cov, screen):
     self.inventory = inventory
     self.level = level + 1
+    self.screen_cov = screen_cov
     self.screen = screen
 
   def dig(self):
@@ -20,21 +21,21 @@ class Diggin:
       if self.level == 1:
         attack *= 1
         attack = str(attack)
-        sword = pick_up('weapon', attack, self.inventory['sword'], 0, self.screen)
+        sword = pick_up('weapon', attack, self.inventory['sword'], 0, self.screen_cov, self.screen)
         check = sword.pick_up_animation()
         if check:
           self.inventory['sword'] = attack
       elif self.level == 2:
         attack *= 2
         attack = str(attack)
-        sword = pick_up('weapon', attack, self.inventory['sword'], 0, self.screen)
+        sword = sword = pick_up('weapon', attack, self.inventory['sword'], 0, self.screen_cov, self.screen)
         check = sword.pick_up_animation()
         if check:
            self.inventory['sword'] = attack
       else:
         attack *= 3
         attack = str(attack)
-        sword = pick_up('weapon', attack, self.inventory['sword'], 0, self.screen)
+        sword = sword = pick_up('weapon', attack, self.inventory['sword'], 0, self.screen_cov, self.screen)
         check = sword.pick_up_animation()
         if check:
           self.inventory['sword'] = attack
@@ -44,26 +45,26 @@ class Diggin:
       if self.level == 1:
         defence *= 1
         defence = str(defence)
-        armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen)
+        armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen_cov, self.screen)
         check = armour.pick_up_animation()
         if check:
            self.inventory['armour'] = defence
       elif self.level == 2:
         defence *= 2
         defence = str(defence)
-        armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen)
+        armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen_cov, self.screen)
         check = armour.pick_up_animation()
         if check:
            self.inventory['armour'] = defence
       else:
         defence *= 3
-        armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen)
+        armour = armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen_cov, self.screen)
         check = armour.pick_up_animation()
         if check:
            self.inventory['armour'] = defence
     else:
       #gun
-      gun = pick_up('gun', str(999), str(1), 0, self.screen)
+      gun = pick_up('gun', str(999), str(1), 0, self.screen_cov, self.screen)
       self.inventory['gun'] = 1
       self.inventory['sword'] = 0
       self.inventory['armour'] = 0

@@ -12,10 +12,6 @@ check = [0, 2, 3]
 level = 0
 clock = pygame.time.Clock()
 radius = 100
-x = 32
-y = 32
-x_mask = radius-(x+block_dim/2)
-y_mask = radius-(y+block_dim/2)
 #
 screen = pygame.display.set_mode((21 * block_dim, 21*block_dim))
 pygame.display.set_caption("A cool Game")
@@ -26,7 +22,7 @@ cover_surf.set_colorkey((0, 1, 255))
 pygame.draw.circle(cover_surf, (0, 1, 255), (x_mask, y_mask), radius)
 clip_rect = pygame.Rect(0, 0, screen_size, screen_size)
 #
-no_dig = pick_up('no', str(0), str(0), str(0), cover_surf)
+no_dig = pick_up('no', str(0), str(0), str(0), cover_surf, screen)
 #
 inventory = {
   'armour': 0,
@@ -90,10 +86,9 @@ while True:
     if maze[level][y//block_dim][x//block_dim] == 3:
       if 'gun' in inventory:
         no_dig.got_gun()
-        pygame.draw.circle(cover_surf, (0, 1, 255), (radius, radius), radius)
       else:
         print('dig')
-        inventory_change = Diggin(inventory, level, screen)
+        inventory_change = Diggin(inventory, level, cover_surf, screen)
         inventory = inventory_change.dig()
         print(inventory)
         maze[level][y//block_dim][x//block_dim] = 0

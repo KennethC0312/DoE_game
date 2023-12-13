@@ -2,11 +2,12 @@ import os
 import pygame
 import time
 from const import *
+from non_const import *
 
 pygame.init()
 
 class pick_up:
-  def __init__(self, type, new_stat, old_stat, torch_level, screen):
+  def __init__(self, type, new_stat, old_stat, torch_level, screen_cov, screen):
     self.type = type
     self.new_stat = []
     for i in new_stat:
@@ -82,7 +83,13 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
                    pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/no more dig for you', 'no_more_dig_18.png')), (screen_size, 150)),
                    pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/no more dig for you', 'no_more_dig_19.png')), (screen_size, 150)),]
     self.torch_level = torch_level
+    self.sc = screen_cov
+    self.sc.fill((0, 0, 0))
+    self.sc.set_colorkey((0,1,255))
+    pygame.draw.circle(self.sc,(0, 1, 255), (x_mask, y_mask), radius)
+    self.clip = pygame.Rect(0, 0, screen_size, screen_size)
     self.screen = screen
+
 
   def pick_up_animation(self):
     if self.type == 'armour':
@@ -100,33 +107,39 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
   def got_gun(self):
     clicked = False
     for i in range(len(self.gun_bro)-2):
-      self.screen.blit(self.gun_bro[i+2], (0, 522))
+      self.sc.blit(self.gun_bro[i+2], (0, 522))
+      self.screen.set_clip(self.clip)
+      self.screen.blit(self.sc, self.clip)
       pygame.display.flip()
-      time.sleep(0.5)
+      time.sleep(0.2)
     while not clicked:
+      for events in pygame.event.get():
+        if events.type == pygame.MOUSEBUTTONDOWN:
+          mouse_presses = pygame.mouse.get_pressed()
+          if mouse_presses[0]:
+            clicked = True
       for i in range(2):
-        for events in pygame.event.get():
-          if events.type == pygame.MOUSEBUTTONDOWN:
-            mouse_presses = pygame.mouse.get_pressed()
-            if mouse_presses[0]:
-              clicked = True
-        self.screen.blit(self.gun_bro[i], (0, 522))
+        self.sc.blit(self.gun_bro[i], (0, 522))
+        self.screen.set_clip(self.clip)
+        self.screen.blit(self.sc, self.clip)
         pygame.display.flip()
-        time.sleep(0.5)
+        time.sleep(0.2)
     clicked = False
     for i in range(len(self.no_dig)-2):
-      self.screen.blit(self.no_dig[i+2], (4, 522))
+      self.sc.blit(self.no_dig[i+2], (32, 522))
+      self.screen.set_clip(self.clip)
+      self.screen.blit(self.sc, self.clip)
       pygame.display.flip()
-      time.sleep(0.5)
+      time.sleep(0.2)
     while not clicked:
+      for events in pygame.event.get():
+        if events.type == pygame.MOUSEBUTTONDOWN:
+          mouse_presses = pygame.mouse.get_pressed()
+          if mouse_presses[0]:
+            clicked = True
       for i in range(2):
-        self.screen.blit(self.no_dig[i], (4, 522))
+        self.sc.blit(self.no_dig[i], (16, 522))
+        self.screen.set_clip(self.clip)
+        self.screen.blit(self.sc, self.clip)
         pygame.display.update()
-        for events in pygame.event.get():
-          if events.type == pygame.MOUSEBUTTONDOWN:
-            mouse_presses = pygame.mouse.get_pressed()
-            if mouse_presses[0]:
-              clicked = True
-            else:
-              continue
-        time.sleep(0.5)
+        time.sleep(0.2)
