@@ -5,3 +5,5 @@ x = 32
 y = 32
 x_mask = radius-(x+block_dim/2)
 y_mask = radius-(y+block_dim/2)
+check = [0, 2, 3]
+level = 0

@@ -5,19 +5,17 @@ from pygame.locals import QUIT
 from digging import *
 from maze_level import *
 from const import *
+from non_const import *
 from pick_up_animations import*
 
 #
-check = [0, 2, 3]
-level = 0
 clock = pygame.time.Clock()
-radius = 100
 #
 screen = pygame.display.set_mode((21 * block_dim, 21*block_dim))
 pygame.display.set_caption("A cool Game")
 #
 cover_surf = pygame.Surface((screen_size, screen_size))
-cover_surf.fill((0, 0, 255))
+cover_surf.fill((0, 0, 0))
 cover_surf.set_colorkey((0, 1, 255))
 pygame.draw.circle(cover_surf, (0, 1, 255), (x_mask, y_mask), radius)
 clip_rect = pygame.Rect(0, 0, screen_size, screen_size)
@@ -26,14 +24,17 @@ no_dig = pick_up('no', str(0), str(0), str(0), cover_surf, screen)
 #
 inventory = {
   'armour': 0,
-  'sword' : 0,
+  'sword' : 10,
   'torch' : 0,
-  'gun': 1
 }
 #
 while True:
+  if inventory['torch'] == 1:
+    radius = 150
+  elif inventory['torch'] == 2:
+    radius = 200
   screen.fill(black)
-  cover_surf.fill((0, 0, 255))
+  cover_surf.fill((0, 0, 0))
   pygame.draw.circle(cover_surf, (0, 1, 255), (x_mask, y_mask), radius)
   screen.set_clip(clip_rect)
   for i in range(len(maze[level])):
@@ -56,6 +57,8 @@ while True:
     level += 1
     x = 32
     y = 32
+    x_mask = radius-(x+block_dim/2)
+    y_mask = radius-(y+block_dim/2)
     time.sleep(5)
   key = pygame.key.get_pressed()
   if key[pygame.K_LEFT]:

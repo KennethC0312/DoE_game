@@ -8,14 +8,18 @@ class Diggin:
     self.screen_cov = screen_cov
     self.screen = screen
 
-  def dig(self):
-    num = random.randint(0, 11)
-    if num >= 0 and num <= 2:
+  def __dig(self, choice):
+    from non_const import radius
+    #num = random.randint(0, 11)
+    if choice >= 0 and choice <= 2:
       if self.inventory['torch'] == 0:
         self.inventory['torch'] += 1
-      if self.inventory['torch'] == 1 and self.level >= 2:
-        self.inventory['torch'] +=1
-    elif num >= 3 and num <= 6:
+        print(radius)
+      elif self.inventory['torch'] == 1 and self.level >= 2:
+        self.inventory['torch'] += 1
+      else:
+        return True
+    elif choice >= 3 and choice <= 6:
       attack = random.randint(1, 1)
       #sword
       if self.level == 1:
@@ -39,7 +43,7 @@ class Diggin:
         check = sword.pick_up_animation()
         if check:
           self.inventory['sword'] = attack
-    elif num >= 7 and num <= 10:
+    elif choice >= 7 and choice <= 10:
       defence = random.randint(1, 1)
       #armour
       if self.level == 1:
@@ -69,3 +73,9 @@ class Diggin:
       self.inventory['sword'] = 0
       self.inventory['armour'] = 0
     return self.inventory
+  def dig(self):
+    choice = 0
+    list = self.__dig(choice)
+    while list == True:
+      list = self.__dig(choice)
+    return list
