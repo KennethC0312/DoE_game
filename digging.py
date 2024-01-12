@@ -20,7 +20,7 @@ class Diggin:
       else:
         return True
     elif choice >= 3 and choice <= 6:
-      attack = random.randint(1, 1)
+      attack = random.randint(10, 50)
       #sword
       if self.level == 1:
         attack *= 1
@@ -30,21 +30,21 @@ class Diggin:
         if check:
           self.inventory['sword'] = attack
       elif self.level == 2:
-        attack *= 2
-        attack = str(attack)
+        attack *= 1.2
+        attack = str(int(attack))
         sword = sword = pick_up('weapon', attack, self.inventory['sword'], 0, self.screen_cov, self.screen)
         check = sword.pick_up_animation()
         if check:
            self.inventory['sword'] = attack
       else:
-        attack *= 3
-        attack = str(attack)
+        attack *= 1.8
+        attack = str(int(attack))
         sword = sword = pick_up('weapon', attack, self.inventory['sword'], 0, self.screen_cov, self.screen)
         check = sword.pick_up_animation()
         if check:
           self.inventory['sword'] = attack
     elif choice >= 7 and choice <= 10:
-      defence = random.randint(1, 1)
+      defence = random.randint(10, 50)
       #armour
       if self.level == 1:
         defence *= 1
@@ -54,15 +54,16 @@ class Diggin:
         if check:
            self.inventory['armour'] = defence
       elif self.level == 2:
-        defence *= 2
-        defence = str(defence)
+        defence *= 1.2
+        defence = str(int(defence))
         armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen_cov, self.screen)
         check = armour.pick_up_animation()
         if check:
            self.inventory['armour'] = defence
       else:
-        defence *= 3
-        armour = armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen_cov, self.screen)
+        defence *= 1.8
+        defence = str(int(defence))
+        armour = pick_up('armour', defence, self.inventory['armour'], 0, self.screen_cov, self.screen)
         check = armour.pick_up_animation()
         if check:
            self.inventory['armour'] = defence
@@ -74,7 +75,7 @@ class Diggin:
       self.inventory['armour'] = 0
     return self.inventory
   def dig(self):
-    choice = 0
+    choice = 7
     list = self.__dig(choice)
     while list == True:
       list = self.__dig(choice)

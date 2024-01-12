@@ -48,8 +48,10 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
                    scale(pygame.image.load(os.path.join('assets/number', '8.png')),(34,48)),
                    scale(pygame.image.load(os.path.join('assets/number', '9.png')),(34,48)),
                    scale(pygame.image.load(os.path.join('assets/number', 'period.png')),(34,48))]
-    self.stat = [pygame.transform.scale(pygame.image.load(os.path.join('assets/stat', 'Armour_stat.png')),((screen_size/2),213)),
-                 scale(pygame.image.load(os.path.join('assets/stat', 'weapon_stat.png')),((screen_size/2),213))]
+    self.stat = [pygame.transform.scale(pygame.image.load(os.path.join('assets/stat', 'Armour_New.png')),((screen_size/2),213)),
+                 pygame.transform.scale(pygame.image.load(os.path.join('assets/stat', 'Armour_old.png')),((screen_size/2),213)),
+                 scale(pygame.image.load(os.path.join('assets/stat', 'weapon_new.png')),((screen_size/2),213)),
+                scale(pygame.image.load(os.path.join('assets/stat', 'weapon_old.png')),((screen_size/2),213))]
     self.gun_bro = [pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/Bro', 'loop_1.png')), (screen_size, 150)),
                     pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/Bro', 'loop_2.png')), (screen_size, 150)),
                     pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/Bro', 'bro_1.png')), (screen_size, 150)),
@@ -104,7 +106,7 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
     if self.type == 'armour':
       for i in range(len(self.pick_up_confirmation)):
         self.sc.blit(self.pick_up_confirmation[i], (0,0))
-        self.sc.blit(self.stat[0], (30, 30))
+        self.sc.blit(self.stat[1], (30, 30))
         self.sc.blit(self.stat[0], (30, 273))
         for i in range(len(self.old_stat)):
           self.sc.blit(self.numbers[int(self.old_stat[i])], self.coods1[i])
@@ -114,18 +116,23 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
         self.screen.blit(self.sc, self.clip)
         pygame.display.flip()
         time.sleep(0.2)
-      time.sleep(1000)
-      '''
       while not self.clicked:
         for events in pygame.event.get():
           if events.type == pygame.MOUSEBUTTONDOWN:
-            if events.button == 0 and 
-            '''
+            mx, my = pygame.mouse.get_pos()
+            print(mx, my)
+            mouse_presses = pygame.mouse.get_pressed()
+            if mouse_presses[0] and ((mx >= 390 and mx<=664)and (my >= 533 and my<=593)):
+              return True
+            elif mouse_presses[0] and ((mx >= 390 and mx<=664)and (my >= 600 and my<=665)):
+              return False
+        self.screen.blit(self.sc, self.clip)
+        pygame.display.flip()
     elif self.type == 'weapon':
       for i in range(len(self.pick_up_confirmation)):
         self.sc.blit(self.pick_up_confirmation[i], (0,0))
-        self.sc.blit(self.stat[1], (30, 30))
-        self.sc.blit(self.stat[1], (30, 273))
+        self.sc.blit(self.stat[3], (30, 30))
+        self.sc.blit(self.stat[2], (30, 273))
         for i in range(len(self.old_stat)):
           self.sc.blit(self.numbers[int(self.old_stat[i])], self.coods1[i])
         for i in range(len(self.new_stat)):
@@ -134,7 +141,18 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
         self.screen.blit(self.sc, self.clip)
         pygame.display.flip()
         time.sleep(0.2)
-      time.sleep(1000)
+      while not self.clicked:
+        for events in pygame.event.get():
+          if events.type == pygame.MOUSEBUTTONDOWN:
+            mx, my = pygame.mouse.get_pos()
+            print(mx, my)
+            mouse_presses = pygame.mouse.get_pressed()
+            if mouse_presses[0] and ((mx >= 390 and mx<=664)and (my >= 533 and my<=593)):
+              return True
+            elif mouse_presses[0] and ((mx >= 390 and mx<=664)and (my >= 600 and my<=665)):
+              return False
+        self.screen.blit(self.sc, self.clip)
+        pygame.display.flip()
     elif self.type == 'torch':
       if self.torch_level == 1:
         pass
