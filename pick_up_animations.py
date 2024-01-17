@@ -11,12 +11,8 @@ class pick_up:
   def __init__(self, type, new_stat, old_stat, torch_level, screen_cov, screen):
     self.clicked = False
     self.type = type
-    self.new_stat = []
-    for i in str(new_stat):
-      self.new_stat.append(i)
-    self.old_stat = []
-    for i in str(old_stat):
-      self.old_stat.append(i)
+    self.new_stat = [x for x in str(new_stat)]
+    self.old_stat = [x for x in str(old_stat)]
     self.coods1 = coods1(len(str(old_stat)))
     self.coods2 = coods2(len(str(new_stat)))
     self.pick_up_confirmation = [pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/pick_up_confirmation', 'pick_up_1.png')), (screen_size, screen_size)),                                pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/pick_up_confirmation', 'pick_up_2.png')), (screen_size, screen_size)),
@@ -91,6 +87,9 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
                    pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/no more dig for you', 'no_more_dig_17.png')), (screen_size, 150)),
                    pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/no more dig for you', 'no_more_dig_18.png')), (screen_size, 150)),
                    pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/no more dig for you', 'no_more_dig_19.png')), (screen_size, 150)),]
+    self.identify = [pygame.transform.scale(pygame.image.load(os.path.join('assets/others', 'armour.png')), (250, 250)),
+                     pygame.transform.scale(pygame.image.load(os.path.join('assets/others', 'sword.png' )), (250, 250)),]
+    self.jump = [180, 190, 200, 210, 220, 230, 230, 230, 220, 210, 200, 190, 180, 180]
     self.torch_level = torch_level
     self.clock = pygame.time.Clock()
     self.sc = screen_cov
@@ -103,8 +102,10 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
 
   def pick_up_animation(self):
     self.clock.tick(200)
+    y = 0
     if self.type == 'armour':
       for i in range(len(self.pick_up_confirmation)):
+        y = (y+1) if y != len(self.jump) else 0
         self.sc.blit(self.pick_up_confirmation[i], (0,0))
         self.sc.blit(self.stat[1], (30, 30))
         self.sc.blit(self.stat[0], (30, 273))
@@ -112,11 +113,24 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
           self.sc.blit(self.numbers[int(self.old_stat[i])], self.coods1[i])
         for i in range(len(self.new_stat)):
           self.sc.blit(self.numbers[int(self.new_stat[i])], self.coods2[i])
+        self.sc.blit(self.identify[0], (390, self.jump[y-1]))
         self.screen.set_clip(self.clip)
         self.screen.blit(self.sc, self.clip)
         pygame.display.flip()
         time.sleep(0.2)
       while not self.clicked:
+        y = (y+1) if y != len(self.jump) else 0
+        self.sc.blit(self.pick_up_confirmation[19], (0,0))
+        self.sc.blit(self.stat[1], (30, 30))
+        self.sc.blit(self.stat[0], (30, 273))
+        for i in range(len(self.old_stat)):
+          self.sc.blit(self.numbers[int(self.old_stat[i])], self.coods1[i])
+        for i in range(len(self.new_stat)):
+          self.sc.blit(self.numbers[int(self.new_stat[i])], self.coods2[i])
+        self.sc.blit(self.identify[0], (390, self.jump[y-1]))
+        self.screen.set_clip(self.clip)
+        self.screen.blit(self.sc, self.clip)
+        pygame.display.flip()
         for events in pygame.event.get():
           if events.type == pygame.MOUSEBUTTONDOWN:
             mx, my = pygame.mouse.get_pos()
@@ -130,6 +144,7 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
         pygame.display.flip()
     elif self.type == 'weapon':
       for i in range(len(self.pick_up_confirmation)):
+        y = (y+1) if y != len(self.jump) else 0
         self.sc.blit(self.pick_up_confirmation[i], (0,0))
         self.sc.blit(self.stat[3], (30, 30))
         self.sc.blit(self.stat[2], (30, 273))
@@ -137,11 +152,25 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
           self.sc.blit(self.numbers[int(self.old_stat[i])], self.coods1[i])
         for i in range(len(self.new_stat)):
           self.sc.blit(self.numbers[int(self.new_stat[i])], self.coods2[i])
+        self.sc.blit(self.identify[1], (390, self.jump[y-1]))
         self.screen.set_clip(self.clip)
         self.screen.blit(self.sc, self.clip)
         pygame.display.flip()
         time.sleep(0.2)
       while not self.clicked:
+        y = (y+1) if y != len(self.jump) else 0
+        self.sc.blit(self.pick_up_confirmation[19], (0,0))
+        self.sc.blit(self.stat[3], (30, 30))
+        self.sc.blit(self.stat[2], (30, 273))
+        for i in range(len(self.old_stat)):
+          self.sc.blit(self.numbers[int(self.old_stat[i])], self.coods1[i])
+        for i in range(len(self.new_stat)):
+          self.sc.blit(self.numbers[int(self.new_stat[i])], self.coods2[i])
+        self.sc.blit(self.identify[1], (390, self.jump[y-1]))
+        self.screen.set_clip(self.clip)
+        self.screen.blit(self.sc, self.clip)
+        pygame.display.flip()
+        time.sleep(0.2)
         for events in pygame.event.get():
           if events.type == pygame.MOUSEBUTTONDOWN:
             mx, my = pygame.mouse.get_pos()

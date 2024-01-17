@@ -1,1 +1,2 @@
 # this is my Duke Of Edinburgh Game which I will 100% not finish in time, if I die or play a game of bungee jump without a rope, this is probably the reason why.
+# Also This is a very messy game and I didn't care about data usage so it is very god damn laggy and the code is very messy as there is a loy of repeated code, big R.I.P ngl
