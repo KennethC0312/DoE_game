@@ -14,9 +14,12 @@ class Diggin:
     if choice >= 0 and choice <= 2:
       if self.inventory['torch'] == 0:
         self.inventory['torch'] += 1
-        print(radius)
+        torch = pick_up('torch', 0, self.inventory['sword'], self.inventory['torch'], self.screen_cov, self.screen)
+        torch.torch_animation()
       elif self.inventory['torch'] == 1 and self.level >= 2:
         self.inventory['torch'] += 1
+        torch = pick_up('torch', 0, self.inventory['sword'], self.inventory['torch'], self.screen_cov, self.screen)
+        torch.torch_animation()
       else:
         return True
     elif choice >= 3 and choice <= 6:
@@ -75,7 +78,7 @@ class Diggin:
       self.inventory['armour'] = 0
     return self.inventory
   def dig(self):
-    choice = 7
+    choice = 1
     list = self.__dig(choice)
     while list == True:
       list = self.__dig(choice)

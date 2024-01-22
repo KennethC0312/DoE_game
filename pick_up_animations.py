@@ -132,6 +132,28 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
                    pygame.transform.scale(pygame.image.load(os.path.join('assets/got_gun/no more dig for you', 'no_more_dig_19.png')), (screen_size, 150)),]
     self.identify = [pygame.transform.scale(pygame.image.load(os.path.join('assets/others', 'armour.png')), (250, 250)),
                      pygame.transform.scale(pygame.image.load(os.path.join('assets/others', 'sword.png' )), (250, 250))]
+    self.torch = [[pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'loop_1.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'loop_2.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_1.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_2.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_3.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_4.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_5.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_6.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_7.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_8.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_9.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_10.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_11.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_12.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_13.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_14.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_15.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_16.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_17.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_18.png')), (screen_size, 150)),
+                  pygame.transform.scale(pygame.image.load(os.path.join('assets/torch/pick_up_1', 'wow_19.png')), (screen_size, 150))],
+                  []]
     self.jump = [180, 190, 200, 210, 220, 230, 230, 230, 220, 210, 200, 190, 180, 180]
     self.torch_level = torch_level
     self.clock = pygame.time.Clock()
@@ -295,11 +317,6 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
               return False
         self.screen.blit(self.sc, self.clip)
         pygame.display.flip()
-    elif self.type == 'torch':
-      if self.torch_level == 1:
-        pass
-      else:
-        pass
     else:  #gun
       pass
 
@@ -344,3 +361,30 @@ pygame.transform.scale(pygame.image.load(os.path.join('assets/pick_up_animation/
         self.screen.blit(self.sc, self.clip)
         pygame.display.update()
         time.sleep(0.2)
+  def torch_animation(self):
+    self.clock.tick(200)
+    n = 1
+    if self.torch_level == 1:
+      for i in range(len(self.torch[0])-2):
+        self.sc.blit(self.torch[0][i+2], (0, 522))
+        self.screen.set_clip(self.clip)
+        self.screen.blit(self.sc, self.clip)
+        pygame.display.flip()
+        if i == 4:
+          time.sleep(0.5)
+        else:
+          time.sleep(0.2)
+      while not self.clicked:
+        n = 1 if n == 0 else 0
+        self.sc.blit(self.torch[0][n], (0,522))
+        self.screen.set_clip(self.clip)
+        self.screen.blit(self.sc, self.clip)
+        pygame.display.flip()
+        for events in pygame.event.get():
+          if events.type == pygame.MOUSEBUTTONDOWN:
+            mouse_presses = pygame.mouse.get_pressed()
+            if mouse_presses[0]:
+              self.clicked = True
+        time.sleep(0.2)
+    else:
+      pass
