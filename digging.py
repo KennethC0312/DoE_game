@@ -12,11 +12,7 @@ class Diggin:
     from non_const import radius
     #num = random.randint(0, 11)
     if choice >= 0 and choice <= 2:
-      if self.inventory['torch'] == 0:
-        self.inventory['torch'] += 1
-        torch = pick_up('torch', 0, self.inventory['sword'], self.inventory['torch'], self.screen_cov, self.screen)
-        torch.torch_animation()
-      elif self.inventory['torch'] == 1 and self.level >= 2:
+      if self.inventory['torch'] == 0 or (self.inventory['torch'] == 1 and self.level >= 2):
         self.inventory['torch'] += 1
         torch = pick_up('torch', 0, self.inventory['sword'], self.inventory['torch'], self.screen_cov, self.screen)
         torch.torch_animation()
@@ -73,12 +69,13 @@ class Diggin:
     else:
       #gun
       gun = pick_up('gun', str(999), str(1), 0, self.screen_cov, self.screen)
+      gun.pick_up_animation()
       self.inventory['gun'] = 1
       self.inventory['sword'] = 0
       self.inventory['armour'] = 0
     return self.inventory
   def dig(self):
-    choice = 1
+    choice = 11
     list = self.__dig(choice)
     while list == True:
       list = self.__dig(choice)

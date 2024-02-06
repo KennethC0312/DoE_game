@@ -57,8 +57,8 @@ while True:
     level += 1
     x = 32
     y = 32
-    x_mask = radius-(x+block_dim/2)
-    y_mask = radius-(y+block_dim/2)
+    x_mask = x+(block_dim/2)
+    y_mask = y+(block_dim/2)
     time.sleep(5)
   key = pygame.key.get_pressed()
   if key[pygame.K_LEFT]:
