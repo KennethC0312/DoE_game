@@ -2,6 +2,7 @@ import sys
 import pygame
 import time
 from pygame.locals import QUIT
+from functions import enemy
 from digging import *
 from maze_level import *
 from const import *
@@ -28,6 +29,9 @@ inventory = {
   'torch' : 0,
 }
 #
+for i in range(3):
+  enemy(maze[level])
+
 while True:
   if inventory['torch'] == 1:
     radius = 150
@@ -41,6 +45,8 @@ while True:
     for n in range(len(maze[level][i])):
       if maze[level][i][n] == 0:
         pygame.draw.rect(screen, (255, 255, 255), (n * block_dim, i * block_dim, block_dim, block_dim))
+      elif maze[level][i][n] == 4:
+        pygame.draw.rect(screen, (133, 0, 155), (n * block_dim, i * block_dim, block_dim, block_dim))
       elif maze[level][i][n] == 2:
         pygame.draw.rect(screen, (0, 255, 0), (n * block_dim, i * block_dim, block_dim, block_dim))
       elif maze[level][i][n] == 3:
@@ -59,6 +65,8 @@ while True:
     y = 32
     x_mask = x+(block_dim/2)
     y_mask = y+(block_dim/2)
+    for i in range(3):
+      enemy(maze[level])
     time.sleep(5)
   key = pygame.key.get_pressed()
   if key[pygame.K_LEFT]:
@@ -95,8 +103,14 @@ while True:
         inventory = inventory_change.dig()
         print(inventory)
         maze[level][y//block_dim][x//block_dim] = 0
+  if key[pygame.K_ESCAPE]:
+     pygame.quit()
+     sys.exit()
   for events in pygame.event.get():
     if events.type == QUIT:
      pygame.quit()
      sys.exit()
+  if maze[level][y//block_dim][x//block_dim] == 4:
+    print('chop')
+    maze[level][y//block_dim][x//block_dim] = 0
   clock.tick(fps)
