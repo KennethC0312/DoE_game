@@ -1,6 +1,5 @@
-import sys
+import sys, os, time
 import pygame
-import time
 from pygame.locals import QUIT
 from functions import enemy
 from digging import *
@@ -20,6 +19,8 @@ cover_surf.fill((0, 0, 0))
 cover_surf.set_colorkey((0, 1, 255))
 pygame.draw.circle(cover_surf, (0, 1, 255), (x_mask, y_mask), radius)
 clip_rect = pygame.Rect(0, 0, screen_size, screen_size)
+#
+exit = scale(pygame.image.load(os.path.join('assets/others', 'quit.png')), (472, 236))
 #
 no_dig = pick_up('no', str(0), str(0), str(0), cover_surf, screen)
 #
@@ -104,8 +105,22 @@ while True:
         print(inventory)
         maze[level][y//block_dim][x//block_dim] = 0
   if key[pygame.K_ESCAPE]:
-     pygame.quit()
-     sys.exit()
+    clicked = False
+    while not clicked:
+      cover_surf.blit(exit, (100, 236))
+      screen.set_clip(clip_rect)
+      screen.blit(cover_surf, clip_rect)
+      for events in pygame.event.get():
+        if events.type == pygame.MOUSEBUTTONDOWN:
+          mx, my = pygame.mouse.get_pos()
+          print(mx, my)
+          mouse_presses = pygame.mouse.get_pressed()
+          if mouse_presses[0] and ((mx >= 176 and mx<=269)and (my >= 385 and my<=424)):
+            pygame.quit()
+            sys.exit()
+          else:
+            clicked = True
+      pygame.display.update()
   for events in pygame.event.get():
     if events.type == QUIT:
      pygame.quit()

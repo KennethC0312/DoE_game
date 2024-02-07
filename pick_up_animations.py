@@ -130,7 +130,6 @@ class pick_up:
         for events in pygame.event.get():
           if events.type == pygame.MOUSEBUTTONDOWN:
             mx, my = pygame.mouse.get_pos()
-            print(mx, my)
             mouse_presses = pygame.mouse.get_pressed()
             if mouse_presses[0] and ((mx >= 390 and mx<=664)and (my >= 533 and my<=593)):
               return True
